@@ -5,5 +5,5 @@ gui = RecAUD()
 gui.open()
 
 model = whisper.load_model("base")
-result = model.transcribe("test_recording.wav")
+result = model.transcribe("audio.wav")
 print(result["text"])

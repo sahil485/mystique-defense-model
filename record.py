@@ -52,7 +52,7 @@ class RecAUD:
 
         stream.close()
 
-        wf = wave.open('test_recording.wav', 'wb')
+        wf = wave.open('audio.wav', 'wb')
         wf.setnchannels(self.CHANNELS)
         wf.setsampwidth(self.p.get_sample_size(self.FORMAT))
         wf.setframerate(self.RATE)
