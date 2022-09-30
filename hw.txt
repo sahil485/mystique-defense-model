@@ -1,0 +1,5 @@
+speech + speaker
+
+identifying the speaker from human voice characteristics
+
+paper link : 
