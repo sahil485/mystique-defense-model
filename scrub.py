@@ -30,11 +30,11 @@ anshul = "anshul"
 alex = 'alex'
 dan = 'dan'
 
-ria_path = 'recordings/ria/ria.m4a'
-sahil_path = 'recordings/sahil/sahil.m4a'
-anshul_path = 'recordings/anshul/anshul.m4a'
-alex_path = 'recordings/alex/alex.m4a'
-dan_path = 'recordings/dan.m4a'
+ria_path = 'recordings/ria/ria1.m4a'
+sahil_path = 'recordings/sahil/sahil1.m4a'
+anshul_path = 'recordings/anshul/anshul1.m4a'
+alex_path = 'recordings/alex/alex1.m4a'
+dan_path = 'recordings/dan/dan1.m4a'
 
 if __name__ == "__main__":
     show_plots(ria_path, ria)

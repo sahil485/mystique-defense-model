@@ -7,6 +7,8 @@ import os
 
 max_freqs = dict()
 
+
+
 def mod_plots(name):
     sr = 800
     num_at_name = len(os.listdir('recordings/{n}/'.format(n=name)))
@@ -34,7 +36,7 @@ def mod_plots(name):
         # multiplying yields that the kth index of the FFT array represents the prominence of the frequency
             #(sr * k cycles / N seconds) Hz in the sinusoidal construction of the signal
 
-        probabilities = fft(x) # take the FFT
+        probabilities = fft(x, 256) # take the FFT
         length = len(probabilities)
         print("Initial sample size (N): {}".format(length))
         cycles_sample = np.arange(length) / length# construct the (cycles/sample) frequencies associated with each index of probabilities
