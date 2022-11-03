@@ -1,5 +1,4 @@
-speech + speaker
+QUESTIONS 11/2/2023:
 
-identifying the speaker from human voice characteristics
-
-paper link : 
+- we talked about the Nyquist-Shannon Theorem - why do the frequency probabilities reflect about y = sr/2 on the
+    plot of the signal in the frequency domain after FFT is computed?
