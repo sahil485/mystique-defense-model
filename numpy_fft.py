@@ -64,6 +64,7 @@ def mod_plots(name):
     plt.xlim(0, sr/2) #Nyquist-Shannon and aliasing - disregard frequencies above sr/2
     plt.savefig('graphs/FFT/{}.png'.format(name))
     plt.show()
+    print("\n")
 
 if __name__ == "__main__":
     mod_plots('sahil')
