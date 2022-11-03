@@ -12,7 +12,7 @@ def mod_plots(name):
     t = np.arange(0, 1, ts)
 
     x, sr = librosa.load('recordings/{}.m4a'.format(name), sr = sr)
-    arr = np.where(x >= 0.01)
+    arr = np.where(x >= 0.01) #thresholding the signal to find values that contain speech
 
     # librosa.display.waveshow(x[arr[0][0]:arr[0][-1]], sr = sr)
     # plt.title("Waveform: {}".format(name))
@@ -22,19 +22,19 @@ def mod_plots(name):
 
     x = x[arr[0][0]:arr[0][-1]]
 
-    vals = fft(x)
+    vals = fft(x) # FFT of signal
     length = len(vals)
-
-    print(length)
 
     n = np.arange(length)
     T = length/sr
 
-    freq_bins = fftfreq(len(vals))[108] ## MAX FREQUENCY
-    print("MAX: {}".format(np.abs(freq_bins*sr)))
+    freq_bins = fftfreq(len(vals))[np.argmax(np.abs(vals))] #finds the bin placement of the highest frequency
+    MAX = np.abs(freq_bins*sr)
+    max_freq[name] = MAX
+    print("{} MAX: {}".format(name, MAX)) #most prevalent frequency
 
     freq = n/T
-    print("FREQ: {}".format(freq))
+    # print("FREQ: {}".format(freq))
 
     # print(np.max(np.abs(vals)))
     m_ind = np.argmax(np.abs(vals))
@@ -54,17 +54,17 @@ def mod_plots(name):
     # plt.subplot(121)
 
     # plt.stem(freq, np.abs(vals), 'b', markerfmt=" ", basefmt="-b")
-    plt.stem(freq, np.abs(v2), 'r', markerfmt=" ", basefmt="-b")
+    plt.stem(freq, np.abs(v2), 'r', markerfmt=" ", basefmt="-b") #graphing the max frequency in FFT for testing purposes
     plt.xlabel('Freq (Hz)')
     plt.ylabel('FFT Amplitude |X(freq)|')
-    plt.xlim(0, sr/2) #Nyquist-Shannon and aliasing
+    plt.xlim(0, sr/2) #Nyquist-Shannon and aliasing - disregard frequencies above sr/2
     plt.savefig('graphs/FFT/{}.png'.format(name))
     plt.show()
     # print(vals)
 
 if __name__ == "__main__":
-    # mod_plots('sahil')
+    mod_plots('sahil')
     mod_plots("ria")
-    # mod_plots("alex")
-    # mod_plots("anshul")
-    # print(max_freq)
+    mod_plots("alex")
+    mod_plots("anshul")
+    print(max_freq)
