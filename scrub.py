@@ -29,16 +29,19 @@ sahil = "sahil"
 anshul = "anshul"
 alex = 'alex'
 dan = 'dan'
+khachane = 'khachane'
 
 ria_path = 'recordings/ria/ria1.m4a'
 sahil_path = 'recordings/sahil/sahil1.m4a'
 anshul_path = 'recordings/anshul/anshul1.m4a'
 alex_path = 'recordings/alex/alex1.m4a'
 dan_path = 'recordings/dan/dan1.m4a'
+khachane_path = 'recordings/khachane/khachane1.m4a'
 
 if __name__ == "__main__":
-    show_plots(ria_path, ria)
-    show_plots(sahil_path, sahil)
-    show_plots(anshul_path, anshul)
-    show_plots(alex_path, alex)
-    show_plots(dan_path, dan)
+    # show_plots(ria_path, ria)
+    # show_plots(sahil_path, sahil)
+    # show_plots(anshul_path, anshul)
+    # show_plots(alex_path, alex)
+    # show_plots(dan_path, dan)
+    show_plots(khachane_path, khachane)

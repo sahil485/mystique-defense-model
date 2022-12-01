@@ -7,8 +7,6 @@ import os
 
 max_freqs = dict()
 
-
-
 def mod_plots(name):
     sr = 800
     num_at_name = len(os.listdir('recordings/{n}/'.format(n=name)))
@@ -24,7 +22,7 @@ def mod_plots(name):
         # plt.savefig('graphs/waveform/{}_threshold.png'.format(name))
 
         x = x[arr[0][0]:arr[0][-1]] #updating array to only include thresholded signal
-
+        print(len(x))
         # FFT PYTHON CALCULATION WORKFLOW:
         # DFT of signal calculated with FFT
         # the unit for the kth index is a frequency in terms of (k cycles/N samples) where N is the length of the signal
@@ -77,9 +75,10 @@ def mod_plots(name):
     print("{n}'s Average Frequency: {m} Hz".format(n=name, m=average))
 
 if __name__ == "__main__":
-    mod_plots('sahil')
-    mod_plots("ria")
-    mod_plots("alex")
-    mod_plots("anshul")
-    mod_plots("dan")
+    # mod_plots('sahil')
+    # mod_plots("ria")
+    # mod_plots("alex")
+    # mod_plots("anshul")
+    # mod_plots("dan")
+    mod_plots('khachane')
     print(max_freqs)
