@@ -28,6 +28,6 @@ def show_plots(name, thres):
         plt.show()
 
 if __name__ == "__main__":
-    # show_plots("sahil", 0.01)
-    # show_plots("dan", 0.025)
+    show_plots("sahil", 0.01)
+    show_plots("dan", 0.025)
     show_plots("khachane", 0.035)
