@@ -1,4 +1,9 @@
-# VoiceRecog
-OpenAI Whisper implementation as first step in the effort to defend against Mystique Live Voice Recognition attack.
+# mystique-defense-model
 
-OpenAI Whispher Github Repo: https://github.com/openai/whisper
+Building a defense against the Mystique Live Voice Recognition Attack in affiliation with Rutgers University
+- Mystique Attack paper: https://arxiv.org/abs/2202.02751v1
+
+OpenAI Whispher for Speech Recognition -> Github Repo: https://github.com/openai/whisper
+
+ML and Signal Processing for User Identification
+
