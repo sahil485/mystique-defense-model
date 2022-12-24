@@ -10,14 +10,17 @@ from statistics.mean import calc_mean
 from statistics.stddev import calc_stddev
 from statistics.skew import calc_skew
 from statistics.kurtosis import calc_kurtosis
+from statistics.bandpass import bandpass_filter
 
 
 class Profile:
 
     def __init__(self, name):
         self.name = name
+        self.sr = 800
         self.sigs = self.get_signals()
-        self.processed_sigs, self.slopes = self.calc_threshold() #will be different sizes because there are different numbers of thresholded signals
+        self.filtered = self.calc_bandpass()
+        self.thresholded_sigs, self.slopes = self.calc_threshold() #will be different sizes because there are different numbers of thresholded signals
         self.mfccs = self.calc_mfccs()
         self.fft = self.calc_fft() #stored in complex ds; units are cycles/sample, not Hz -> shouldn't matter because they are all the same
         self.mean = self.calc_means()
@@ -28,23 +31,26 @@ class Profile:
     def calc_threshold(self):
         return calc_buckets(self.sigs)
 
+    def calc_bandpass(self):
+        return bandpass_filter(self.sigs, sr = self.sr)
+
     def calc_mfccs(self):
-        return calc_mfcc(self.processed_sigs)
+        return calc_mfcc(self.thresholded_sigs)
 
     def calc_fft(self):
-        return calc_fft(self.processed_sigs)
+        return calc_fft(self.thresholded_sigs)
 
     def calc_means(self):
-        return calc_mean(self.processed_sigs)
+        return calc_mean(self.thresholded_sigs)
 
     def calc_stddev(self):
-        return calc_stddev(self.processed_sigs)
+        return calc_stddev(self.thresholded_sigs)
 
     def calc_skew(self):
-        return calc_skew(self.processed_sigs)
+        return calc_skew(self.thresholded_sigs)
 
     def calc_kurtosis(self):
-        return calc_kurtosis(self.processed_sigs)
+        return calc_kurtosis(self.thresholded_sigs)
 
     def get_signals(self): #retrieves signals from audio files
         original_signals = []
@@ -69,7 +75,7 @@ class Profile:
         return self.sigs
 
     def getThresholdedSigs(self): #returns the thresholded signals
-        return self.processed_sigs
+        return self.thresholded_sigs
 
     def getSlopes(self):
         return self.slopes
@@ -90,6 +96,7 @@ class Profile:
         return self.kurtosis
 
 if __name__ == "__main__":
-    for person in ['dan', 'khachane', 'ria', 'anshul', 'alex']:
-        obj = Profile(person)
-        obj.serialize()
+    # for person in ['dan', 'khachane', 'ria', 'anshul', 'alex']:
+    #     obj = Profile(person)
+    #     obj.serialize()
+    obj = Profile('dan')

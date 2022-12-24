@@ -7,6 +7,6 @@ FEATURES 12/22/2022:
 
 (DONE) skew and kurtosis
 
-- try bandpass filtering (preprocessing) - 50 Hz to 250 Hz - scipy
+(DONE) try bandpass filtering (preprocessing) - 50 Hz to 250 Hz - scipy
 
 - use zero padding for machine learning when inputting the thresholded signal into the model -> indicates signal length
