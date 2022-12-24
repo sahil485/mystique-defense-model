@@ -1,4 +1,12 @@
-QUESTIONS 11/2/2023:
+FEATURES 12/22/2022:
 
-- we talked about the Nyquist-Shannon Theorem - why do the frequency probabilities reflect about y = sr/2 on the
-    plot of the signal in the frequency domain after FFT is computed?
+
+(DONE) use bucket to create "slopes" from the start value of a bucket to the end value
+    -> manual discretization of the signal
+    -> do it with the thresholded signal
+
+(DONE) skew and kurtosis
+
+- try bandpass filtering (preprocessing) - 50 Hz to 250 Hz - scipy
+
+- use zero padding for machine learning when inputting the thresholded signal into the model -> indicates signal length

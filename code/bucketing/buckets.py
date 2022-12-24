@@ -2,17 +2,20 @@ import librosa
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def calc_buckets(signal_arr):
 
     thresholded_sigs = []
+    all_slopes = []
 
     for index, signal in enumerate(signal_arr):
-        thresholded_sigs.append(calc_buckets_for(signal))
+        thresholded_sig, slopes = threshold(signal)
+        thresholded_sigs.append(thresholded_sig)
+        all_slopes.append(slopes)
 
-    return thresholded_sigs
+    return [thresholded_sigs, all_slopes]
 
-def calc_buckets_for(signal):
+
+def threshold(signal):
     sr = 800
     buckets = 6
     averages = np.zeros(buckets)
@@ -24,8 +27,6 @@ def calc_buckets_for(signal):
         averages[i] = big_bucket_average
         plt.axvline(lower/sr)
         plt.axvline(upper/sr)
-
-    print(averages)
 
     arr = np.argpartition(averages, (buckets-2, buckets-1))
     maxes = [arr[len(arr)-2], arr[len(arr)-1]]
@@ -54,15 +55,12 @@ def calc_buckets_for(signal):
 
             if sub_average >= (min(averages[maxes[0]], averages[maxes[1]]) * 0.35):
                 prev_sub_index_start = int(sub_lower_bound)
-                # print(f"Set lower bound {sub_lower_bound}")
                 sub_sig_to_precede = signal[prev_sub_index_start : (1 + one_before) * len(signal) // buckets]
                 max_portion = np.asarray(np.hstack((sub_sig_to_precede, max_portion)))
-
                 break
 
     if prev_sub_index_start == -1:
         prev_sub_index_start = beg_max
-        # print(f"Set beg max {beg_max}")
 
     ##THRESHOLD SUB BUCKET IMMEDIATELY AFTER
 
@@ -79,23 +77,46 @@ def calc_buckets_for(signal):
 
             if sub_average >= (min(averages[maxes[0]], averages[maxes[1]]) * 0.4):
                 post_sub_index_end  = int(sub_upper_bound)
-                # print(f"Set upper bound {sub_upper_bound}")
-                sub_sig_to_succeed = signal[(1 + one_before) * len(signal) // buckets : post_sub_index_end]
+                sub_sig_to_succeed = signal[one_after * len(signal) // buckets : post_sub_index_end]
+                # sub_sig_to_succeed = signal[(3 + one_before) * len(signal) // buckets : post_sub_index_end]
                 max_portion = np.asarray(np.hstack((max_portion, sub_sig_to_succeed)))
 
                 break
 
     if post_sub_index_end == -1:
-        post_sub_index_end  = end_max
-        # print(f"Set end max {end_max}")
+        post_sub_index_end = end_max
 
     librosa.display.waveshow(signal, sr=sr)
-    plt.axvline(x=prev_sub_index_start / 800, color='g')
-    plt.axvline(x=post_sub_index_end / 800, color='g')
+    plt.axvline(x=prev_sub_index_start / sr, color='r')
+    plt.axvline(x=post_sub_index_end / sr, color='r')
+
+    slopes = calc_linear_fit(max_portion, 5*buckets, prev_sub_index_start)
+
     plt.show()
 
-    return max_portion
+    return [max_portion, slopes.tolist()]
 
 #workflow - find two max buckets - store them
 #for the two bordering buckets, divide into subbuckets and find those which have an average
     #greater than or equal to that of the max buckets - means signals are within them
+
+
+def calc_linear_fit(max_portion, buckets, prev_sub_index_start):
+    sr = 800
+    slopes = np.zeros(buckets)
+
+    for i in range(buckets):
+        lower, upper = ((i * len(max_portion)) // buckets), (((i + 1) * len(max_portion)) // buckets) - 1
+
+        curr_slope = (max_portion[upper] - max_portion[lower]) / (upper - lower)
+
+        pt1 = [lower + prev_sub_index_start, max_portion[lower]]
+        pt2 = [upper + prev_sub_index_start, max_portion[upper]]
+
+        plt.plot([pt1[0] / sr, pt2[0] / sr], [pt1[1], pt2[1]], color='k')
+        # plt.axvline(pt1[0] / sr, color='g')
+        # plt.axvline(pt2[0] / sr, color='g')
+
+        slopes[i] = curr_slope
+
+    return slopes
