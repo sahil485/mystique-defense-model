@@ -32,7 +32,7 @@ class Profile:
         return calc_buckets(self.sigs)
 
     def calc_bandpass(self):
-        return bandpass_filter(self.sigs, sr = self.sr)
+        return bandpass_filter(self.sigs, self.sr, 'm')
 
     def calc_mfccs(self):
         return calc_mfcc(self.thresholded_sigs)
@@ -95,8 +95,10 @@ class Profile:
     def getKurtosis(self):
         return self.kurtosis
 
+
 if __name__ == "__main__":
     # for person in ['dan', 'khachane', 'ria', 'anshul', 'alex']:
     #     obj = Profile(person)
     #     obj.serialize()
-    obj = Profile('dan')
+    obj = Profile('sahil')
+    obj.serialize()

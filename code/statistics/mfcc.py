@@ -9,6 +9,7 @@ def calc_mfcc(processed_sigs):
         # print(mfcc_arr.shape) #testing shape of returned MFCC array - why are there 24 coeffs. for some, and 12 (as desired) for others?
         mfccs.append(mfcc_arr[0].tolist())
         # print(mfcc_arr.tolist())
+    print(mfccs)
     return mfccs
 
 # if __name__ == "__main__":
